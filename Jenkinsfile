@@ -1,0 +1,25 @@
+@Library('my-shared-lib') _
+pipeline {
+    agent any
+    tools {
+        maven 'maven3.9.9'
+        jdk 'java17'
+    }
+    stages {
+        stage('Checkout') {
+            steps {
+                git branch: 'main', url:   'https://github.com/SureshGavvala/devops_practice.git'
+            }
+        }
+        stage('Build') {
+            steps {
+                mavenBuild()
+            }
+        }
+        stage('Post-Build') {
+            steps {
+                echo "Build completed successfully using Shared Library."
+            }
+        }
+    }
+}
